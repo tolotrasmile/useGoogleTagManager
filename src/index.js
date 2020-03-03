@@ -1,18 +1,19 @@
-// import React, { useState, useEffect } from "react"
-
-// const win = typeof window !== "undefined" ? window : Nothing
-// const doc = typeof document !== "undefined" ? document : Nothing
 /**
- * The hook
- * Shoud return the datalayer
+ * As described: https://developers.google.com/tag-manager/quickstart
  */
 
 let dataLayer = []
 
+/**
+ * Just a console.log helper to print error messages.
+ */
+const log = msg => console.error(`[GoogleTagManager]: ${msg}`)
+
 const gtmData = data => {
   // Should check if object key is string. gtmData({cool: 'cool'})
   if (data == undefined || data.length == 0) {
-    return new TypeError('Data should be provided.')
+    log('Data should be provided.')
+    return false
   } else {
     return dataLayer.push(data)
   }
@@ -20,70 +21,75 @@ const gtmData = data => {
 
 const gtmEvent = event => {
   if (event == undefined || event.length == 0) {
-    return new TypeError('A event name should be provided.')
+    log('Data should be provided.')
+    return false
   } else {
     return dataLayer.push({ event: event })
   }
 }
 
 const useGoogleTagManager = (id, conf) => {
-  // Wrap the require in check for window
-
-  /**
-   * dataLayer needs to be exposed to component.
-   * Whenever dataLayer changes, the head-tag needs to be updated.
-   */
-
-  // const [dataLayer, setDataLayer] = useState([])
-
-  // useEffect(() => initDataLayer(dataLayer), [dataLayer])
-  initScripts(id)
-  // return window.dataLayer
-  return [gtmData, gtmEvent]
-
-  // return "dataLayer"
-  // return window.dataLayer
+  const checkParams = () => {
+    if (id == undefined || id.length == 0) {
+      log('ID should be provided.')
+      return false
+    } else if (conf) {
+      for (let [key, value] of Object.entries(conf)) {
+        if (!key.match(/(dataLayerName)|(auth)|(env)/)) {
+          log(`The only keys allowed are 'dataLayerName, 'auth' and 'env`)
+          return false
+        } else if (value.length == 0) {
+          log(`If you provide ${key}, then it shouldn't be empty.`)
+          return false
+        }
+      }
+    }
+    return initScripts(id)
+  }
+  return checkParams()
 }
-
-const addElement = (nodeType, innerHTML) => {
-  const el = document.createElement(nodeType)
-  el.innerHTML = innerHTML
-  return el
-}
-
-/**
- * As described: https://developers.google.com/tag-manager/quickstart
- */
 
 /**
  * id = GTM-XXXX
  */
 const initScripts = id => {
+  // const gtm_auth = `&gtm_auth=${auth}`
+  // const gtm_preview = `&gtm_preview=${preview}`
   const gtmHeadScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${id}');`
-
+  //ns.html?id=${id}${gtm_auth}${gtm_preview}&gtm_cookies_win=x"
   const gtmBodyScript = `<iframe src="https://www.googletagmanager.com/ns.html?id=${id}"height="0" width="0" style="display:none;visibility:hidden"></iframe>`
-
+  //om/gtm.js?id='+i+dl+'${gtm_auth}${gtm_preview}&gtm_cookie
   if (typeof window !== `undefined`) {
     document.head.prepend(addElement('script', gtmHeadScript))
     document.body.prepend(addElement('noscript', gtmBodyScript))
     dataLayer = window.dataLayer
   }
+
+  return [gtmData, gtmEvent]
 }
 
-const initDataLayer = setDataLayer => {
-  const dataLayerScript = dataLayer => {
-    // setDataLayer(window.)
-    // return `window.${dataLayerName} = window.${dataLayerName} || [];
-    //   window.${dataLayerName}.push(${JSON.stringify(dataLayer)})`
-    return `dataLayer = ${JSON.stringify(dataLayer)}`
-  }
-
-  if (typeof window !== `undefined`) {
-    document.head.prepend(
-      addElement('script', dataLayerScript([{ huhu: 'cool' }]))
-    )
-  }
+/**
+ * Small helper function.
+ */
+const addElement = (nodeType, innerHTML) => {
+  const el = document.createElement(nodeType)
+  el.innerHTML = innerHTML
+  return el
 }
+// const initDataLayer = setDataLayer => {
+//   const dataLayerScript = dataLayer => {
+//     // setDataLayer(window.)
+//     // return `window.${dataLayerName} = window.${dataLayerName} || [];
+//     //   window.${dataLayerName}.push(${JSON.stringify(dataLayer)})`
+//     return `dataLayer = ${JSON.stringify(dataLayer)}`
+//   }
+
+//   if (typeof window !== `undefined`) {
+//     document.head.prepend(
+//       addElement('script', dataLayerScript([{ huhu: 'cool' }]))
+//     )
+//   }
+// }
 
 // const dataLayer = window.$dataLayer
 
