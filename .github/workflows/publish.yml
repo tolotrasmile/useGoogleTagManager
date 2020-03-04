@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: 12
       - run: yarn install --frozen-lockfile
+      - run: yarn build
       - run: yarn test
 
   publish-npm:
@@ -28,7 +29,8 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: yarn install --frozen-lockfile
-      - run: yarn publish
+      - run: yarn build
+      - run: yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
@@ -43,6 +45,7 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@zeekrey'
       - run: yarn install --frozen-lockfile
+      - run: yarn build
       - run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
