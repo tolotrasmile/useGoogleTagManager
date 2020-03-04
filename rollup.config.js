@@ -1,21 +1,17 @@
-import babel from "rollup-plugin-babel";
-import pkg from "./package.json";
-import minify from "rollup-plugin-babel-minify";
+import babel from 'rollup-plugin-babel'
+import pkg from './package.json'
+import minify from 'rollup-plugin-babel-minify'
 
 const config = {
-  input: "src/index.js",
+  input: 'src/index.js',
   output: [
     {
       file: pkg.main,
-      format: "cjs"
+      format: 'cjs'
     },
     {
       file: pkg.module,
-      format: "esm"
-    },
-    {
-      file: pkg.browser,
-      format: "umd"
+      format: 'esm'
     }
   ],
   plugins: [
@@ -24,6 +20,6 @@ const config = {
       comments: false
     })
   ]
-};
+}
 
-export default config;
+export default config
