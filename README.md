@@ -37,7 +37,7 @@ For a more individual usage:
 ```javascript
 import useGoogleTagManager from "useGTM"
 
-const [gtmData, gtmEvent] = useGoogleTagManager('GTM-1234567', {dataLayerName: 'myDataLayer', auth: 'abc', env: 'dev'})
+const [gtmData, gtmEvent] = useGoogleTagManager('GTM-1234567', {dataLayerName: 'myDataLayerName'})
 ```
 
 ## Google Tag Manager information

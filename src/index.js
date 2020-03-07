@@ -18,7 +18,7 @@ const useGoogleTagManager = (id, conf) => {
       for (let [key, value] of Object.entries(conf)) {
         if (!key.match(/(dataLayerName)/)) {
           // if (!key.match(/(dataLayerName)|(auth)|(env)/)) {
-          log(`The only keys allowed are 'dataLayerName.`)
+          log(`The only keys allowed are 'dataLayerName'.`)
           return false
         } else if (value.length == 0) {
           log(`If you provide ${key}, then it shouldn't be empty.`)
