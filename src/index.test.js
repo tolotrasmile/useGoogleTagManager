@@ -9,7 +9,7 @@ describe('useGoogleTagManager', () => {
     expect(useGoogleTagManager('GTM-1')).toEqual(expect.arrayContaining([gtmEvent, gtmData]))
   })
   it('GTM should be initiated correct with config', () => {
-    expect(useGoogleTagManager('GTM-1', {dataLayerName: 'x', auth: 'x', env: 'x'})).toEqual(expect.arrayContaining([gtmEvent, gtmData]))
+    expect(useGoogleTagManager('GTM-1', {dataLayerName: 'x'})).toEqual(expect.arrayContaining([gtmEvent, gtmData]))
   })
   it('Inititation with empty gtm id should return false.', () => {
     expect(useGoogleTagManager('')).toBe(false)
@@ -22,9 +22,6 @@ describe('useGoogleTagManager', () => {
   })
   it('Inititation with empty config parameter should return false.', () => {
     expect(useGoogleTagManager('GTM-1', {dataLayerName: ''})).toBe(false)
-  })
-  it('Inititation with empty config parameter should return false.', () => {
-    expect(useGoogleTagManager('GTM-1', {dataLayerName: 'x', env: ''})).toBe(false)
   })
 })
 
@@ -64,7 +61,7 @@ describe('gtmData', () => {
   it('gtm data with no data', () => {
     expect(gtmData()).toBe(false)
   })
-  it('gtm data with no object', () => {
-    expect(gtmData('cool')).toBe(false)
+  it('gtm data with not object data', () => {
+    expect(gtmData(['x'])).toBe(false)
   })
 })
