@@ -7,13 +7,13 @@ A simple Google Tag Manager wrapper in a React Hook style.
 Installation with NPM:
 
 ```bash
-npm install useGTM
+npm install @zeekrey/useGTM
 ```
 
 Installation with Yarn:
 
 ```bash
-yarn add useGTM
+yarn add @zeekrey/useGTM
 ```
 
 ## Usage
