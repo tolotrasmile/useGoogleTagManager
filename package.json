@@ -34,17 +34,20 @@
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.8.6",
-    "semantic-release-cli": "^5.2.3",
     "jest": "^25.1.0",
     "rollup": "^1.32.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-babel-minify": "^9.1.1",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "semantic-release": "^17.0.4"
+    "semantic-release": "^17.0.4",
+    "semantic-release-cli": "^5.2.3"
   },
   "scripts": {
     "build": "rollup --config",
     "test": "jest",
     "semantic-release": "semantic-release"
+  },
+  "dependencies": {
+    "conventional-changelog-eslint": "^3.0.4"
   }
 }
