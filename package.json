@@ -23,7 +23,17 @@
       [
         "@semantic-release/commit-analyzer",
         {
-          "preset": "eslint"
+          "preset": "eslint",
+          "releaseRules": [
+            {
+              "tag": "Docs",
+              "release": "minor"
+            },
+            {
+              "tag": "New",
+              "release": "patch"
+            }
+          ]
         }
       ],
       "@semantic-release/github",
