@@ -52,9 +52,37 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ### Development
+Run test with
+```bash
+yarn test
+```
+
+or
+```bash
+yarn test --watch
+```
+
+To bundle everything up use
+
 ```bash
 yarn build
 ```
+
+We use the ESLint Convention for conventional commting and changelog: https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-eslint
+
+Here is a quote from the ESLint documentation:
+
+The Tag is one of the following:
+
+Fix - for a bug fix.
+Update - either for a backwards-compatible enhancement or for a rule change that adds reported problems.
+New - implemented a new feature.
+Breaking - for a backwards-incompatible enhancement or feature.
+Docs - changes to documentation only.
+Build - changes to build process only.
+Upgrade - for a dependency upgrade.
+Chore - for refactoring, adding tests, etc. (anything that isn't user-facing).
+Use the labels of the issue you are working on to determine the best tag.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
