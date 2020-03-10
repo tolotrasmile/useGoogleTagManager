@@ -27,11 +27,11 @@
           "releaseRules": [
             {
               "tag": "Docs",
-              "release": "minor"
+              "release": "patch"
             },
             {
               "tag": "New",
-              "release": "patch"
+              "release": "minor"
             }
           ]
         }
