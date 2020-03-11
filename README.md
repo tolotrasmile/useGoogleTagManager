@@ -23,7 +23,7 @@ yarn add @zeekrey/useGTM
 The most basic usage:
 
 ```javascript
-import useGoogleTagManager from "useGTM"
+import useGoogleTagManager from "@zeekrey/usegtm"
 
 const [gtmData, gtmEvent] = useGoogleTagManager('GTM-1234567')
 
@@ -37,7 +37,7 @@ gtmEvent('myEvent')
 For a more individual usage:
 
 ```javascript
-import useGoogleTagManager from "useGTM"
+import useGoogleTagManager from "@zeekrey/usegtm"
 
 const [gtmData, gtmEvent] = useGoogleTagManager('GTM-1234567', {dataLayerName: 'myDataLayerName'})
 ```
