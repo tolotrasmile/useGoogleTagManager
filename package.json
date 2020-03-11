@@ -23,15 +23,47 @@
       [
         "@semantic-release/commit-analyzer",
         {
-          "preset": "eslint",
+          "preset": "atom",
           "releaseRules": [
             {
-              "tag": "Docs",
+              "type": "[Feat]",
+              "release": "minor"
+            },
+            {
+              "type": "[Breaking]",
+              "release": "major"
+            },
+            {
+              "emoji": ":art:",
               "release": "patch"
             },
             {
-              "tag": "New",
-              "release": "minor"
+              "emoji": ":memo:",
+              "release": "patch"
+            },
+            {
+              "emoji": ":fire:",
+              "release": "patch"
+            },
+            {
+              "emoji": ":green_heart:",
+              "release": "patch"
+            },
+            {
+              "emoji": ":white_check_mark:",
+              "release": "patch"
+            },
+            {
+              "emoji": ":shirt:",
+              "release": "patch"
+            },
+            {
+              "emoji": ":arrow_up:",
+              "release": "patch"
+            },
+            {
+              "emoji": ":arrow_down:",
+              "release": "patch"
             }
           ]
         }
@@ -44,7 +76,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.8.6",
-    "conventional-changelog-eslint": "^3.0.4",
+    "conventional-changelog-atom": "^2.0.3",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
