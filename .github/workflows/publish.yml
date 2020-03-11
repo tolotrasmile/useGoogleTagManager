@@ -29,37 +29,24 @@ jobs:
           node-version: 12
       - run: yarn install
       - run: yarn build
-      - name: Release
+      - name: Release to
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
-  release-gpr:
-    needs: release-npm
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-          registry-url: https://npm.pkg.github.com/
-          scope: '@zeekrey'
-      - run: yarn install
-      - run: yarn build
-      - run: yarn publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  # publish-npm:
-  #   needs: build
+  # release-gpr:
+  #   needs: release-npm
   #   runs-on: ubuntu-latest
   #   steps:
   #     - uses: actions/checkout@v2
   #     - uses: actions/setup-node@v1
   #       with:
   #         node-version: 12
-  #         registry-url: https://registry.npmjs.org/
-  #     - run: yarn install --frozen-lockfile
+  #         registry-url: https://npm.pkg.github.com/
+  #         scope: '@zeekrey'
+  #     - run: yarn install
   #     - run: yarn build
-  #     - run: yarn publish --access public
+  #     - name: Release
   #       env:
-  #         NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       run: npx semantic-release
