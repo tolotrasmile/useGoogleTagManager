@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: yarn install --frozen-lockfile
+      - run: yarn install
       - run: yarn build
       - run: yarn lint
       - run: yarn test
@@ -27,7 +27,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: yarn install --frozen-lockfile
+      - run: yarn install
       - run: yarn build
       - name: Release
         env:
@@ -44,7 +44,7 @@ jobs:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
           scope: '@zeekrey'
-      - run: yarn install --frozen-lockfile
+      - run: yarn install
       - run: yarn build
       - run: yarn publish
         env:
