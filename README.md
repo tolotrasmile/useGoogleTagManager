@@ -1,5 +1,7 @@
 # useGoogleTagManager
 
+![CI/CD](https://github.com/zeekrey/useGoogleTagManager/workflows/CI/CD/badge.svg)
+
 A simple Google Tag Manager wrapper in a React Hook style.
 
 ## Installation
