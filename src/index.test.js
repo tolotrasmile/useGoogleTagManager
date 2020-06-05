@@ -30,6 +30,14 @@ describe('useGoogleTagManager', () => {
   it('Inititation with empty config parameter should return false.', () => {
     expect(useGoogleTagManager('GTM-1', { dataLayerName: '' })).toBe(false)
   })
+  it('Inititation a second time should not add the gtm tag again, should instead return the existing object.', () => {
+    useGoogleTagManager('GTM-1')
+
+    /**
+     * Check if the gtag script is only available once.
+     */
+    expect(useGoogleTagManager('GTM-1', { dataLayerName: '' })).toBe(false)
+  })
 })
 
 /**

@@ -76,6 +76,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.8.6",
+    "browser-sync": "^2.26.7",
     "conventional-changelog-atom": "^2.0.3",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
@@ -89,14 +90,16 @@
     "rollup-plugin-babel-minify": "^9.1.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "semantic-release": "^17.0.4",
-    "semantic-release-cli": "^5.2.3"
+    "semantic-release-cli": "^5.2.3",
+    "serve": "^11.3.2"
   },
   "scripts": {
     "build": "rollup --config",
     "lint": "eslint .",
     "test": "jest",
     "test:watch": "jest --watch",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "example": "serve demo"
   },
   "jest": {
     "collectCoverageFrom": [
