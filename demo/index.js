@@ -1,19 +1,15 @@
-customElements.define('my-paragraph',
-  class extends HTMLElement {
-    constructor() {
-      super();
+import React, { useEffect } from 'react'
+import ReactDOM from 'react-dom'
 
-      const template = document.getElementById('my-paragraph');
-      const templateContent = template.content;
+const app = () => {
+  /**
+   * 1. Check if gtm-tag found on mount
+   */
 
-      this.attachShadow({mode: 'open'}).appendChild(
-        templateContent.cloneNode(true)
-      );
-    }
-  }
-);
+  /**
+   * 2. Mount component that calls useGTM
+   */
+  return <h1>Hello, world!</h1>
+}
 
-const slottedSpan = document.querySelector('my-paragraph span');
-
-console.log(slottedSpan.assignedSlot);
-console.log(slottedSpan.slot);
+ReactDOM.render(app, document.getElementById('root'))
