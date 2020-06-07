@@ -42,6 +42,9 @@ import useGoogleTagManager from "@zeekrey/usegtm"
 const [gtmData, gtmEvent] = useGoogleTagManager('GTM-1234567', {dataLayerName: 'myDataLayerName'})
 ```
 
+## React is a peer dependency
+To use this you need at least React 16+ installed.
+
 ## Google Tag Manager information
 The Google Tag Manager stores all variables and event in an object called dataLayer available in the global scope.
 

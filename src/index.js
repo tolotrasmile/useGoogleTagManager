@@ -1,40 +1,89 @@
-let dataLayer = []
+import React from 'react'
 
-/**
- * Just a console.log helper to print error messages.
- */
-const log = msg => console.error(`[GoogleTagManager]: ${msg}`)
+function useGoogleTagManager(id, conf) {
+  const dataLayerName = conf?.dataLayerName || 'dataLayer'
+  const beSilent = conf?.debugging || false
+  const log = (lvl, msg) =>
+    beSilent && console[lvl](`[GoogleTagManager]: ${msg}`)
+  const [dataLayer, setDataLayer] = React.useState(null)
 
-/**
- * Example usage:
- * useGoogleTagManager('GTM-1234567) or useGoogleTagManager('GTM-1234567', {dataLayerName: 'myDataLayerName'})
- */
-const useGoogleTagManager = (id, conf) => {
-  const checkParams = () => {
+  function checkParams(id, conf) {
     if (id === undefined || id.length === 0 || !id.match(/^GTM-/)) {
-      log('ID should be provided.')
+      log('error', 'ID should be provided.')
       return false
     } else if (conf) {
       for (const [key, value] of Object.entries(conf)) {
         if (!key.match(/(dataLayerName)/)) {
-          // if (!key.match(/(dataLayerName)|(auth)|(env)/)) {
-          log('The only keys allowed are -dataLayerName-.')
+          log('error', 'The only keys allowed are -dataLayerName-.')
           return false
         } else if (value.length === 0) {
-          log(`If you provide ${key}, then it shouldn't be empty.`)
+          log('error', `If you provide ${key}, then it shouldn't be empty.`)
           return false
         }
       }
     }
-    return initScripts(id, conf || {})
   }
-  return checkParams()
+
+  if (!checkParams(id, conf)) return {}
+
+  React.useEffect(() => {
+    if (!window[dataLayerName]) {
+      log(
+        'warn',
+        `Google Tag Manager not found. Trying to init GTM with: ${id}.`
+      )
+      initScripts(id, dataLayerName)
+    } else {
+      log('info', 'Google Tag Manager found.')
+      setDataLayer(window.dataLayerName)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    setDataLayer(window[dataLayerName])
+  }, [window[dataLayerName]])
+
+  /**
+   * Function to add data to the dataLayer.
+   * Example usage:
+   * gtmData('myvar': 'data')
+   */
+
+  const gtmData = (data) => {
+    if (data === undefined || data.length === 0) {
+      log(
+        'error',
+        "Data should be provided in the following form: {'varname': 'data'}"
+      )
+      return false
+    } else {
+      return dataLayer.push(data)
+    }
+  }
+
+  /**
+   * Function to trigger an event.
+   * Example usage:
+   * gtmEvent('myEvent')
+   */
+
+  const gtmEvent = (event) => {
+    if (
+      event === undefined ||
+      event.length === 0 ||
+      typeof event !== 'string'
+    ) {
+      log('error', 'Event data should be a string.')
+      return false
+    } else {
+      return dataLayer.push({ event: event })
+    }
+  }
+
+  return { dataLayer, gtmData, gtmEvent }
 }
 
-/**
- * initScripts adds the GTM js to the DOM-Head and Body.
- */
-const initScripts = (id, { dataLayerName = 'dataLayer' }) => {
+const initScripts = (id, dataLayerName) => {
   /**
    * As described: https://developers.google.com/tag-manager/quickstart
    */
@@ -44,40 +93,10 @@ const initScripts = (id, { dataLayerName = 'dataLayer' }) => {
   if (typeof document !== 'undefined') {
     document.head.prepend(addElement('script', gtmHeadScript))
     document.body.prepend(addElement('noscript', gtmBodyScript))
-    dataLayer = window[dataLayerName]
+    return window ? window[dataLayerName] : true
   }
 
-  return [gtmData, gtmEvent]
-}
-
-/**
- * Function to add data to the dataLayer.
- * Example usage:
- * gtmData('myvar': 'data')
- */
-
-const gtmData = data => {
-  if (data === undefined || data.length === 0) {
-    log("Data should be provided in the following form: {'varname': 'data'}")
-    return false
-  } else {
-    return dataLayer.push(data)
-  }
-}
-
-/**
- * Function to trigger an event.
- * Example usage:
- * gtmEvent('myEvent')
- */
-
-const gtmEvent = event => {
-  if (event === undefined || event.length === 0 || typeof event !== 'string') {
-    log('Event data should be a string.')
-    return false
-  } else {
-    return dataLayer.push({ event: event })
-  }
+  return true
 }
 
 /**
@@ -89,4 +108,4 @@ const addElement = (nodeType, innerHTML) => {
   return el
 }
 
-export { useGoogleTagManager as default, gtmEvent, gtmData }
+export { useGoogleTagManager as default }
