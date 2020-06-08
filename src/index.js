@@ -1,8 +1,8 @@
 import React from 'react'
 
 function useGoogleTagManager(id, conf) {
-  const dataLayerName = conf?.dataLayerName || 'dataLayer' // eslint-disable-line
-  const beSilent = conf?.debugging || false // eslint-disable-line
+  const dataLayerName = conf.dataLayerName || 'dataLayer' 
+  const beSilent = conf.debugging || false
   const log = (lvl, msg) =>
     beSilent && console[lvl](`[GoogleTagManager]: ${msg}`)
   const [dataLayer, setDataLayer] = React.useState(null)
