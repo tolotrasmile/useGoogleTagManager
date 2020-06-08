@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import useGoogleTagManager from '../src/index'
 
@@ -8,7 +8,7 @@ const App = () => {
 
   const GtmComponent = () => {
     const { dataLayer, gtmData, gtmEvent } = useGoogleTagManager(gtmId, {
-      debugging: true
+      debugging: true,
     })
 
     return (
@@ -16,10 +16,12 @@ const App = () => {
         <div>This is the dataLayer: {JSON.stringify(dataLayer)}</div>
         <div>
           {dataLayer && (
-            <button onClick={() => gtmData(Date.now())}>Add data</button>
+            <button onClick={() => gtmData({ date: Date.now() })}>
+              Add data
+            </button>
           )}
           {dataLayer && (
-            <button onClick={() => gtmEvent({ myEvent: Date.now() })}>
+            <button onClick={() => gtmEvent('Whoop!')}>
               Add event
             </button>
           )}

@@ -1,8 +1,8 @@
 import React from 'react'
 
 function useGoogleTagManager(id, conf) {
-  const dataLayerName = conf?.dataLayerName || 'dataLayer'
-  const beSilent = conf?.debugging || false
+  const dataLayerName = conf?.dataLayerName || 'dataLayer' // eslint-disable-line
+  const beSilent = conf?.debugging || false // eslint-disable-line
   const log = (lvl, msg) =>
     beSilent && console[lvl](`[GoogleTagManager]: ${msg}`)
   const [dataLayer, setDataLayer] = React.useState(null)
@@ -13,8 +13,9 @@ function useGoogleTagManager(id, conf) {
       return false
     } else if (conf) {
       for (const [key, value] of Object.entries(conf)) {
-        if (!key.match(/(dataLayerName)/)) {
-          log('error', 'The only keys allowed are -dataLayerName-.')
+        if (key !== 'dataLayerName' && key !== 'debugging') {
+          console.log(key)
+          log('error', `The only keys allowed are 'dataLayerName' and 'debugging'.`)
           return false
         } else if (value.length === 0) {
           log('error', `If you provide ${key}, then it shouldn't be empty.`)
@@ -22,6 +23,7 @@ function useGoogleTagManager(id, conf) {
         }
       }
     }
+    return true
   }
 
   if (!checkParams(id, conf)) return {}
